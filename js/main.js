@@ -1,7 +1,10 @@
 let num = 266219;
 let str = String(num);
 
-let product = str[0]*str[1]*str[2]*str[3]*str[4]*str[5];
+let product = 1;
+for(let i=0; i<str.length; i++) {
+    product*=str[i];
+}
 console.log(product);
 
 let power = String(product ** 3);
