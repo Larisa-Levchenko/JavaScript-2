@@ -8,6 +8,6 @@ for(let i=0; i<str.length; i++) {
 console.log(product);
 
 let power = String(product ** 3);
-console.log(power.substr(0,2));
+console.log(power.substring(0,2));
 
 
