@@ -19,8 +19,7 @@ let days = [
     ['понедельник, вторник, среда, четверг, пятница, суббота, воскресенье'],
     ['Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday']
 ];
-let res = lang==='ru' ? console.log('понедельник, вторник, среда, четверг, пятница, суббота, воскресенье')
-:console.log('Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday');
+let res = lang==='ru' ? days[0] : days[1];
 
 
 let namePerson = prompt('Введите имя');
