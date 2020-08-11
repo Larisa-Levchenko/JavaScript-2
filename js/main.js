@@ -15,11 +15,12 @@ switch(lang){
         break;
 }
 
-let days = [
-    ['понедельник, вторник, среда, четверг, пятница, суббота, воскресенье'],
-    ['Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday']
-];
-let res = lang==='ru' ? days[0] : days[1];
+let days = {
+    ru: ['понедельник, вторник, среда, четверг, пятница, суббота, воскресенье'],
+    en: ['Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday']
+};
+
+console.log(days[lang]);
 
 
 let namePerson = prompt('Введите имя');
