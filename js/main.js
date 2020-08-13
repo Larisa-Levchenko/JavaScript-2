@@ -1,51 +1,29 @@
 'use strict';
 
-let num = 5;
-let str1 = '        hello     ';
-let bool = true;
-let str2 = '   fghfkfkfkfkkkfkfkkfkfkkfkkfkfkfkfkkffkpooooojj4566t3bbfbvnbjbfjvjbfjbbvfb';
+let arr =['1526677','2222','46766779','399991113', '24567', '783332456', '2787712'];
 
-//Функция удаляет все пробелы в начале
-const delFirstSpace = function(arg){
-    while(arg[0]===' '){
-        let len = arg.length;        
-        arg = arg.substring(1,len);
+for(let i = 0; i<arr.length; i++){
+   if(arr[i][0]==='2' || arr[i][0]==='4'){
+       console.log(arr[i]);
+   }
+}
+
+//функция проверки простое число или нет
+const changeSimple = function(n){
+    let simple = true;
+    for(let i = 2; i<=Math.sqrt(n); i++){
+        if(n%i===0){
+            simple = false;            
+            continue;
+        }
     }
-    return arg;
+    return(simple);
 };
-//Функция удаляет все пробелы в конце
-const delLastSpace = function(arg){
-    let len = arg.length-1;    
-    while(arg[len]===' '){      
-      arg = arg.substring(0,len);
-      len--;           
-    }   
-    return arg;
-};
-//Если более 30 знаков заменяет текст на точки
-const delSymbol = function(arg){
-    let len = arg.length;
-    if (len>30){
-        arg = arg.substring(0,30);
-        arg +='...';        
+
+for(let i = 2; i<100; i++){
+    if(changeSimple(i)){
+        console.log(i);
+        console.log('Делители этого числа: 1 и ' + i);
     }
-    return arg;    
-};
-
-
-const inputData = function(arg){    
-    if(typeof(arg)!=='string'){
-        return 'В качестве аргумента передана не строка';
-    }else{
-        arg = delFirstSpace(arg);
-        arg = delLastSpace(arg);
-        arg = delSymbol(arg);
-        return arg;
-    }
-};
-
-console.log(inputData(num));
-console.log(inputData(str1));
-console.log(inputData(bool));
-console.log(inputData(str2));
-
+    
+}
