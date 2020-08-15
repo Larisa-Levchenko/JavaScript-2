@@ -2,10 +2,11 @@
 
 let arr =['1526677','2222','46766779','399991113', '24567', '783332456', '2787712'];
 
-for(let i = 0; i<arr.length; i++){
-   if(arr[i][0]==='2' || arr[i][0]==='4'){
-       console.log(arr[i]);
-   }
+for (let i = 0; i < arr.length; i++) {
+    let firstElem = arr[i][0];
+    if (firstElem === '2' || firstElem === '4') {
+        console.log(arr[i]);
+    }
 }
 
 //функция проверки простое число или нет
