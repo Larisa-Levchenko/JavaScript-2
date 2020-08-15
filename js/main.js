@@ -1,29 +1,17 @@
 'use strict';
 
-let arr =['1526677','2222','46766779','399991113', '24567', '783332456', '2787712'];
+let week = ['понедельник', 'вторник','среда','четверг','пятница','суббота','воскресенье'];
 
-for(let i = 0; i<arr.length; i++){
-   if(arr[i][0]==='2' || arr[i][0]==='4'){
-       console.log(arr[i]);
-   }
+
+let dateWeek = new Date().toLocaleString('ru', {weekday: 'long'});
+
+for (let i = 0; i < week.length; i++) {
+    if (week[i] === dateWeek) {
+        console.log('%c%s', 'font-weight: bold;', week[i]);
+    } else if (week[i] === 'суббота' || week[i] === 'воскресенье') {
+        console.log('%c%s', 'font-style: italic;', week[i]);
+    } else {
+        console.log(week[i]);
+    }
 }
 
-//функция проверки простое число или нет
-const changeSimple = function(n){
-    let simple = true;
-    for(let i = 2; i<=Math.sqrt(n); i++){
-        if(n%i===0){
-            simple = false;            
-            continue;
-        }
-    }
-    return(simple);
-};
-
-for(let i = 2; i<100; i++){
-    if(changeSimple(i)){
-        console.log(i);
-        console.log('Делители этого числа: 1 и ' + i);
-    }
-    
-}
