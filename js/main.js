@@ -1,17 +1,21 @@
 'use strict';
 
+
+let div = document.getElementById('div');
 let week = ['понедельник', 'вторник','среда','четверг','пятница','суббота','воскресенье'];
 
-
 let dateWeek = new Date().toLocaleString('ru', {weekday: 'long'});
+let liFirst = document.createElement('p');
+
 
 for (let i = 0; i < week.length; i++) {
     if (week[i] === dateWeek) {
-        console.log('%c%s', 'font-weight: bold;', week[i]);
+        div.innerHTML = div.innerHTML + week[i].bold() + '<br>';
     } else if (week[i] === 'суббота' || week[i] === 'воскресенье') {
-        console.log('%c%s', 'font-style: italic;', week[i]);
+        div.innerHTML = div.innerHTML + week[i].italics() + '<br>';
     } else {
-        console.log(week[i]);
-    }
+        div.innerHTML = div.innerHTML + week[i] + '<br>';
+        
+    }  
 }
 
