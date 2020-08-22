@@ -1,30 +1,93 @@
 'use strict';
 
-let arr =['1526677','2222','46766779','399991113', '24567', '783332456', '2787712'];
+const content =document.querySelector('.content');
 
-for (let i = 0; i < arr.length; i++) {
-    let firstElem = arr[i].substring(0,1);   
-    if (firstElem === '2' || firstElem === '4') {
-        console.log(arr[i]);
-    }
-}
-
-//функция проверки простое число или нет
-const changeSimple = function(n){
-    let simple = true;
-    for(let i = 2; i<=Math.sqrt(n); i++){
-        if(n%i===0){
-            simple = false;            
-            continue;
-        }
-    }
-    return(simple);
+const getMonth = function(n, str){
+    if(n!==3 && n!==8){        
+      return str.substring(0,str.length-1)+'я';
+    }else{
+        
+        return str+'a';
+    }    
 };
 
-for(let i = 2; i<100; i++){
-    if(changeSimple(i)){
-        console.log(i);
-        console.log('Делители этого числа: 1 и ' + i);
+
+const getHour = function(n){
+    if(n===1 || n===21){
+        return `${n} час`;
+    }else{
+        if (n % 10 > 1 && n % 10 < 5 && Math.trunc(n/10)!==1) {
+            return `${n} часа`;
+        }
+        else{
+            return `${n} часов`;
+        }
+    } 
+};
+const getMinute = function (n) {
+    if (n % 10 === 1 && Math.trunc(n / 10) !== 1) {
+        return `${n} минута`;
+    } else {
+        if (n % 10 > 1 && n % 10 < 5 && Math.trunc(n / 10) !== 1) {
+            return `${n} минуты`;
+        } else {
+            return `${n} минут`;
+        }
     }
+};
+const getSec = function(n){
+    if (n % 10 === 1 && Math.trunc(n / 10) !== 1){
+        return `${n} секунда`;
+    } else {
+        if (n % 10 > 1 && n % 10 < 5 && Math.trunc(n / 10) !== 1) {
+            return `${n} секунды`;
+        }else{
+            return `${n} секунд`;
+        }    
+    }
+};
+
+const getZero = function (n) {
+    if(n<10){
+        return `0${n}`;
+    }else{
+        return n;
+    }
+
+};
+
+
+
+
+
+setTimeout(function run() {
+    const date = new Date();    
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let sec = date.getSeconds();
+
+    let dateWeek = date.toLocaleString('ru', {
+        weekday: 'long'
+    });
+    let longMonth = date.toLocaleString('ru', {
+        month: 'long'
+    });
+
+    let str1 = `Сегодня ${dateWeek}, ${day} ${getMonth(month,longMonth)} ${year} года, ${getHour(hour)} ${getMinute(minute)} ${getSec(sec)}`;
+    let str2 = `${getZero(day)}.${getZero(month)}.${year} - ${getZero(hour)}:${getZero(minute)}:${getZero(sec)}`;
+
+    content.textContent='';
+    const p1 = document.createElement('p');
+    p1.textContent = str1;
+    content.append(p1);
+    const p2 = document.createElement('p');
+    p2.textContent = str2;
+    content.append(p2);
     
-}
+    setTimeout(run, 1000);
+}, 1000);
+ 
