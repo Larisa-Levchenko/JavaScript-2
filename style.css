@@ -1,0 +1,19 @@
+body{
+    background-color: green;
+}
+.container{    
+    text-align: center;
+}
+.text{
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: bold;
+}
+.btn{
+    background-color: #fff;
+    color: green;
+    font-size: 25px;
+    border: 0;
+    padding: 10px;
+    outline: 0;
+}
