@@ -1,14 +1,5 @@
 'use strict';
 
-const date = new Date();
-
-let hour = date.getHours();
-let minute = date.getMinutes();
-let sec = date.getSeconds();
-
-let dateWeek = date.toLocaleString('ru', {
-     weekday: 'long'
-});
 function getZero(n) {
     if (n < 10) {
         n = '0' + n;
@@ -16,7 +7,7 @@ function getZero(n) {
     return n;
 }
 
-function timeDay(){
+function timeDay(hour){
     if (hour > 6 && hour < 12) {
         return 'Доброе утро';
     } else if (hour > 12 && hour <18) {
@@ -28,7 +19,7 @@ function timeDay(){
     }
 }
 
-function getTime(){
+function outputTime(hour,minute,sec){
     if(hour<12){
         return `${getZero(hour)}:${getZero(minute)}:${getZero(sec)} AM`;
     }else{
@@ -54,18 +45,41 @@ function getDay(n){
     }
 }
 
-let greeting = document.createElement('p');
-greeting.textContent=timeDay();
-document.body.append(greeting);
+function getTime() {
+    document.body.textContent ='';
+    const date = new Date();
 
-let today = document.createElement('p');
-today.textContent = `Сегодня: ${dateWeek}`;
-document.body.append(today);
+    var timeinterval = setInterval(getTime, 1000);
 
-let time = document.createElement('p');
-time.textContent = getTime();
-document.body.append(time);
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let sec = date.getSeconds();
 
-let newYear = document.createElement('p');
-newYear.textContent = `До нового года осталось ${getDay(getTimeREmaining())}`;
-document.body.append(newYear);
+    let dateWeek = date.toLocaleString('ru', {
+        weekday: 'long'
+    });
+
+    dateWeek = date.toLocaleString('ru', {
+        weekday: 'long'
+    });
+
+    let greeting = document.createElement('p');
+    greeting.textContent = timeDay(hour);
+    document.body.append(greeting);
+
+    let today = document.createElement('p');
+    today.textContent = `Сегодня: ${dateWeek}`;
+    document.body.append(today);
+
+
+    let time = document.createElement('p');
+    time.textContent = outputTime(hour, minute, sec);
+    document.body.append(time);
+
+
+    let newYear = document.createElement('p');
+    newYear.textContent = `До нового года осталось ${getDay(getTimeREmaining())}`;
+    document.body.append(newYear);
+}
+
+getTime();
