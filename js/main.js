@@ -1,85 +1,68 @@
 'use strict';
 
-function getZero(n) {
-    if (n < 10) {
-        n = '0' + n;
-    }
-    return n;
-}
+const robot = document.querySelector('.robot');
+const mainBtn = document.querySelector('.btn');
+const reset = document.querySelector('.reset');
 
-function timeDay(hour){
-    if (hour > 6 && hour < 12) {
-        return 'Доброе утро';
-    } else if (hour > 12 && hour <18) {
-        return 'Добрый день';
-    } else if (hour > 18) {
-        return 'Добрый вечер';
-    } else {
-        return 'Доброй ночи';
-    }
-}
+let defaultRun = true;
+let newLeft = 0;
+let animation = 0;
+robot.style.left = 0;
 
-function outputTime(hour,minute,sec){
-    if(hour<12){
-        return `${getZero(hour)}:${getZero(minute)}:${getZero(sec)} AM`;
-    }else{
-        return `${getZero(hour-12)}:${getZero(minute)}:${getZero(sec)} PM`;
-    }
-}
-function getTimeREmaining() {
-    let dateStop = new Date('1 January 2021').getTime(),
-        dateNow = new Date().getTime(),
-        timeRemaining = (dateStop - dateNow) / 1000/60/60/24;
-        return Math.ceil(timeRemaining);
-}
 
-function getDay(n){
-    if (n % 10 === 1 && Math.trunc(n / 10) !== 1) {
-        return `${n} день`;
-    } else {
-        if (n % 10 > 1 && n % 10 < 5 && Math.trunc(n / 10) !== 1) {
-            return `${n} дня`;
-        } else {
-            return `${n} дней`;
+const robotRun = () => {
+    const runRight = () => {
+        newLeft += 2;
+        if (newLeft > 1450) {
+            defaultRun = false;
+            robot.style.transform = 'scale(-1, 1)';
         }
+    };
+    const runLeft = () => {
+        newLeft -= 2;
+        if (newLeft < 0) {
+            defaultRun = true;
+            robot.style.transform = '';
+        }
+    };
+
+    if (defaultRun) {
+        runRight();
+    } else {
+        runLeft();
     }
-}
+    robot.style.left = `${newLeft}px`;
 
-function getTime() {
-    document.body.textContent ='';
-    const date = new Date();
+    animation = window.requestAnimationFrame(robotRun);
+};
 
-    var timeinterval = setInterval(getTime, 1000);
+mainBtn.addEventListener('click', (event) => {
+    let target = event.target;
+    if (target.classList.contains('start')) {
+        robotRun();
+        robot.src = '../img/robot.gif';
+    }
+    if (target.classList.contains('stop')) {
+        cancelAnimationFrame(animation);
+        robot.src = '../img/robot.jpg';
+    }
+    mainBtn.classList.toggle('start');
+    mainBtn.classList.toggle('stop');
 
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    let sec = date.getSeconds();
+});
 
-    let dateWeek = date.toLocaleString('ru', {
-        weekday: 'long'
-    });
+reset.addEventListener('click', () => {
+    if (mainBtn.classList.contains('start')) {
+        robot.src = '../img/robot.gif';
+    }
 
-    dateWeek = date.toLocaleString('ru', {
-        weekday: 'long'
-    });
+    defaultRun = true;
+    newLeft = 0;
+    robot.style.transform = '';
+    mainBtn.classList.remove('start');
+    mainBtn.classList.add('stop');
+    cancelAnimationFrame(animation);
+    robotRun();
+});
 
-    let greeting = document.createElement('p');
-    greeting.textContent = timeDay(hour);
-    document.body.append(greeting);
-
-    let today = document.createElement('p');
-    today.textContent = `Сегодня: ${dateWeek}`;
-    document.body.append(today);
-
-
-    let time = document.createElement('p');
-    time.textContent = outputTime(hour, minute, sec);
-    document.body.append(time);
-
-
-    let newYear = document.createElement('p');
-    newYear.textContent = `До нового года осталось ${getDay(getTimeREmaining())}`;
-    document.body.append(newYear);
-}
-
-getTime();
+robotRun();
