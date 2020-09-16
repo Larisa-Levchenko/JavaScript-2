@@ -1,49 +1,47 @@
-document.addEventListener('DOMContentLoaded', () => {
-    'use strict';
+"use strict";
 
-    const select = document.getElementById('cars'),
-        output = document.getElementById('output');
+const btn1 = document.getElementById("btn-1");
+const btn2 = document.getElementById("btn-2");
+const USD1 = document.getElementById("USD-1");
+const USD2 = document.getElementById("USD-2");
+const RUB1 = document.getElementById("RUB-1");
+const RUB2 = document.getElementById("RUB-2");
 
-    const getDate = () => {
-        return new Promise((resolve, reject) => {
-            const request = new XMLHttpRequest();
-            request.open('GET', './cars.json');
-            request.setRequestHeader('Content-type', 'application/json');
-            request.send();
-            request.addEventListener('readystatechange', () => {
-                if (request.readyState !== 4) {
-                    return;
-                }
-                if (request.status === 200) {
-                    const data = JSON.parse(request.responseText);
-                    resolve(data);
-                } else {
-                    reject();
-                }
-            });
-
-        });
-    };
-
-    const addDate = (data) => {
-      data.cars.forEach((item) => {
-        if (item.brand === select.value) {
-          const { brand, model, price } = item;
-          output.innerHTML = `Тачка ${brand} ${model} <br>
-                            Цена: ${price}$`;
-        }
-      });
-    };
-
-    const addError = () => {
-        output.innerHTML = 'Произошла ошибка';
-    };
-
-    select.addEventListener('change', () => {
-        getDate()
-            .then(data => addDate(data))
-            .catch(() => addError());
-
-    });
-
+USD1.addEventListener("input", () => {
+  USD1.value = USD1.value.replace(/\D/g, "");
 });
+RUB2.addEventListener("input", () => {
+  RUB2.value = RUB2.value.replace(/\D/g, "");
+});
+
+RUB1.disabled = true;
+USD2.disabled = true;
+
+const getDate = () => {
+  return fetch("https://api.exchangeratesapi.io/latest?base=USD", {
+    mode: "cors",
+  });
+};
+
+const calc = (date) => {
+  btn1.addEventListener("click", () => {
+    if (USD1.value !== "") {
+      RUB1.value = (USD1.value * date).toFixed(2);
+    }
+  });
+  btn2.addEventListener("click", () => {
+    if (RUB2.value !== "") {
+      USD2.value = (RUB2.value / date).toFixed(2);
+    }
+  });
+};
+
+getDate()
+  .then((response) => {
+    if (response.status !== 200) {
+      throw new Error("Сервер не доступен...");
+    }
+    return response.json();
+  })
+  .then((dat) => calc(dat.rates.RUB))
+  .catch((error) => console.log(error));
